@@ -19,4 +19,4 @@
         android:textColor="@android:color/white"
         android:textStyle="bold"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"/>
-</RelativeLayout>   
+</RelativeLayout>
