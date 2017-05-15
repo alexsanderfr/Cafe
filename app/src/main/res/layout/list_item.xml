@@ -8,8 +8,8 @@
         android:id="@+id/item_image"
         android:layout_width="wrap_content"
         android:layout_height="200dp"
-        android:src="@drawable/placeholder"
-        android:alpha="0.75"
+        android:src="@drawable/cappuccino"
+        android:alpha="0.70"
         android:scaleType="centerCrop" />
     <TextView
         android:id="@+id/item_name"

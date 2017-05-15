@@ -1,8 +1,5 @@
 package com.example.cafe;
 
-
-//Created by henriquedealmeida on 11/05/17.
-
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+//Created by henriquedealmeida on 11/05/17.
 
 public class ProductAdapter extends ArrayAdapter<Product> {
 

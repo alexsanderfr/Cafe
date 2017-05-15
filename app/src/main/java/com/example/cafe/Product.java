@@ -9,7 +9,7 @@ public class Product {
     private int mImageResourceId;
 
     //constructor
-    public void Product(String name, int imageResourceId){
+    public Product(String name, int imageResourceId){
         mName = name;
         mImageResourceId = imageResourceId;
     }
