@@ -7,18 +7,9 @@
     tools:context="com.example.cafe.SignUpActivity">
 
     <EditText
-        android:id="@+id/name_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Nome"
-        android:inputType="text"
-        android:textColor="@android:color/black" />
-
-    <EditText
         android:id="@+id/email_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/name_edit_text"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:textColor="@android:color/black" />
@@ -41,6 +32,7 @@
         android:layout_below="@id/password_edit_text"
         android:layout_centerHorizontal="true"
         android:text="Cadastrar"
+        android:onClick="onClickSignUp"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="0dp" />
 
