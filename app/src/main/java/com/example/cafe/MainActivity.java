@@ -8,9 +8,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity {
 
-    String[] optionsStringArray = {"Cadastro", "Login", "Pedidos"};
+    String[] optionsStringArray = {"Pedidos", "Sair"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,14 +28,12 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        startActivity(new Intent(getApplicationContext(), SignUpActivity.class));
-                        break;
-                    case 1:
-                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                        break;
-                    case 2:
                         startActivity(new Intent(getApplicationContext(), OrderActivity.class));
                         break;
+                    case 1:
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                        finish();
                 }
             }
         });
