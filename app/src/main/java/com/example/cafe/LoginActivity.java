@@ -15,6 +15,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+
 public class LoginActivity extends AppCompatActivity {
 
     private String TAG = "LOGTAG";
@@ -27,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -34,7 +36,9 @@ public class LoginActivity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("User", user.getUid());
+                    startActivity(intent);
                     finish();
                 } else {
                     // User is signed out

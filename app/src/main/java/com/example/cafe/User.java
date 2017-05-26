@@ -11,6 +11,7 @@ public class User {
     private String name;
     private String email;
     private String password;
+    private String type;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -22,6 +23,7 @@ public class User {
         user.child("name").setValue(getName());
         user.child("email").setValue(getEmail());
         user.child("password").setValue(Base64Custom.encodeBase64(getPassword()));
+        user.child("type").setValue(getType());
 
     }
 
@@ -57,4 +59,11 @@ public class User {
         this.password = password;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

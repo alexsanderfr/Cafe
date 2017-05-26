@@ -35,7 +35,9 @@ public class SignUpActivity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("User", user.getUid());
+                    startActivity(intent);
                     finish();
                 } else {
                     // User is signed out
@@ -68,6 +70,7 @@ public class SignUpActivity extends AppCompatActivity {
         user.setName(nameEditText.getText().toString());
         user.setEmail(emailEditText.getText().toString());
         user.setPassword(passwordEditText.getText().toString());
+        user.setType("user");
         signUpUser();
     }
 
