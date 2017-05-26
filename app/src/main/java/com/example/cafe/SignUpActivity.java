@@ -20,6 +20,7 @@ public class SignUpActivity extends AppCompatActivity {
     private String TAG = "LOGTAG";
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +62,18 @@ public class SignUpActivity extends AppCompatActivity {
     public void onClickSignUp(View view) {
         EditText emailEditText = (EditText) findViewById(R.id.email_edit_text);
         EditText passwordEditText = (EditText) findViewById(R.id.password_edit_text);
-        String email = emailEditText.getText().toString();
-        String password = passwordEditText.getText().toString();
+        EditText nameEditText = (EditText) findViewById(R.id.name_edit_text);
 
+        user = new User();
+        user.setName(nameEditText.getText().toString());
+        user.setEmail(emailEditText.getText().toString());
+        user.setPassword(passwordEditText.getText().toString());
+        signUpUser();
+    }
+
+    private void signUpUser() {
         mAuth = FirebaseAuth.getInstance();
-        mAuth.createUserWithEmailAndPassword(email, password)
+        mAuth.createUserWithEmailAndPassword(user.getEmail(), user.getPassword())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -76,6 +84,12 @@ public class SignUpActivity extends AppCompatActivity {
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), R.string.auth_failed,
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                            if(firebaseUser != null) user.setId(firebaseUser.getUid());
+                            user.save();
+                            Toast.makeText(getApplicationContext(), "Sign up success!",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
