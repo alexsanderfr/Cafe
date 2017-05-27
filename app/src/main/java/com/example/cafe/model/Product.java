@@ -1,4 +1,4 @@
-package com.example.cafe;
+package com.example.cafe.model;
 
  //Created by henriquedealmeida on 11/05/17.
 

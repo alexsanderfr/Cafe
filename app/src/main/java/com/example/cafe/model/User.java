@@ -1,5 +1,6 @@
-package com.example.cafe;
+package com.example.cafe.model;
 
+import com.example.cafe.helper.Base64Custom;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;

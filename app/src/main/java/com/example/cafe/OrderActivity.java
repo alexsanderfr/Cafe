@@ -1,13 +1,50 @@
 package com.example.cafe;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.cafe.model.Order;
+import com.example.cafe.model.Product;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class OrderActivity extends AppCompatActivity {
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_exit:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    Calendar calendar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,5 +62,30 @@ public class OrderActivity extends AppCompatActivity {
         ProductAdapter productAdapter = new ProductAdapter(this, products);
         ListView orderList = (ListView) findViewById(R.id.order_list_view);
         orderList.setAdapter(productAdapter);
+
+        orderList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                calendar = Calendar.getInstance();
+                String date = calendar.getTime().toString();
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                TextView productTextView = (TextView) view.findViewById(R.id.item_name);
+                String product = productTextView.getText().toString();
+                SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
+                        getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                String name = sharedPref.getString("name", null);
+                Order order = new Order();
+                if (user!= null) {
+                    order.setUser(name);
+                    order.setId(user.getUid() + position);
+                }
+                order.setDate(date);
+                order.setProduct(product);
+                order.save();
+                Toast.makeText(getApplicationContext(), "Você pediu um " + product,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }

@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.cafe.model.Product;
+
 import java.util.ArrayList;
 
 //Created by henriquedealmeida on 11/05/17.
@@ -22,7 +24,7 @@ public class ProductAdapter extends ArrayAdapter<Product> {
     public View getView(int position, View convertView, ViewGroup parent) {
         View listItemView = convertView;
         if(listItemView == null) {
-            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
+            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.product_list_item, parent, false);
         }
 
         Product currentProduct = getItem(position);

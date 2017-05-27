@@ -1,4 +1,4 @@
-package com.example.cafe;
+package com.example.cafe.helper;
 
 import android.util.Base64;
 
