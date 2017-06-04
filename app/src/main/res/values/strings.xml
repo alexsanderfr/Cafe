@@ -1,7 +1,9 @@
 <resources>
-    <string name="app_name">Cafe</string>
-    <string name="auth_failed">Auth failed</string>
+    <string name="app_name">Café</string>
+    <string name="auth_failed">Falha de autenticação</string>
     <string name="cappuccino">Cappuccino</string>
-    <string name="cappuccino_content_description">Picture of a cappuccino</string>
+    <string name="cappuccino_content_description">Foto de um cappuccino</string>
     <string name="preference_file_key">preferences</string>
+    <string name="order">Pedir</string>
+    <string name="cancel">Cancelar</string>
 </resources>

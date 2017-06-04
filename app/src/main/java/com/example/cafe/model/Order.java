@@ -8,6 +8,7 @@ public class Order {
     private String date;
     private String product;
     private String user;
+    private String table;
 
     public Order() {
 
@@ -15,10 +16,11 @@ public class Order {
 
     public void save(){
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference user = database.child("Orders").child(getId());
-        user.child("date").setValue(getDate());
-        user.child("product").setValue(getProduct());
-        user.child("user").setValue(getUser());
+        DatabaseReference order = database.child("Orders").child(getId());
+        order.child("date").setValue(getDate());
+        order.child("product").setValue(getProduct());
+        order.child("user").setValue(getUser());
+        order.child("table").setValue(getTable());
     }
 
     public String getId() {
@@ -51,5 +53,13 @@ public class Order {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public String getTable() {
+        return table;
+    }
+
+    public void setTable(String table) {
+        this.table = table;
     }
 }

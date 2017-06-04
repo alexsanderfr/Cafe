@@ -87,7 +87,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onTypeChange(String type) {
-        Toast.makeText(getApplicationContext(), "Authenticated as " + type,
+        String typeTranslate = null;
+        if (type.equals("user")) {
+            typeTranslate = "usuário";
+        } else if (type.equals("admin")) {
+            typeTranslate = "administrador";
+        }
+        Toast.makeText(getApplicationContext(), "Autenticado como " + typeTranslate,
                 Toast.LENGTH_SHORT).show();
         switch (type) {
             case "user": {

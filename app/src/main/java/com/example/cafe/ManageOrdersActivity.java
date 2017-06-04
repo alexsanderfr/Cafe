@@ -67,6 +67,9 @@ public class ManageOrdersActivity extends AppCompatActivity {
                                 order.setUser(String.valueOf(attributeSnapshot.getValue()));
                                 break;
                             }
+                            case "table": {
+                                order.setTable(String.valueOf(attributeSnapshot.getValue()));
+                            }
                         }
                     }
 
@@ -85,7 +88,8 @@ public class ManageOrdersActivity extends AppCompatActivity {
     private void onOrdersChanged(ArrayList<Order> orders) {
         ArrayList<String> orderStringArray = new ArrayList<>();
         for (Order order : orders) {
-            orderStringArray.add(order.getProduct() + " pedido por " + order.getUser() + " em " + order.getDate());
+            orderStringArray.add(order.getProduct() + " pedido por " + order.getUser()
+                    + " na mesa " + order.getTable());
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(),

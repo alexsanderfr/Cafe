@@ -1,15 +1,19 @@
 package com.example.cafe;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +49,7 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     Calendar calendar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,27 +70,57 @@ public class OrderActivity extends AppCompatActivity {
 
         orderList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                calendar = Calendar.getInstance();
-                String date = calendar.getTime().toString();
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                TextView productTextView = (TextView) view.findViewById(R.id.item_name);
-                String product = productTextView.getText().toString();
-                SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
-                        getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-                String name = sharedPref.getString("name", null);
-                Order order = new Order();
-                if (user!= null) {
-                    order.setUser(name);
-                    order.setId(user.getUid() + position);
-                }
-                order.setDate(date);
-                order.setProduct(product);
-                order.save();
-                Toast.makeText(getApplicationContext(), "Você pediu um " + product,
-                        Toast.LENGTH_SHORT).show();
+            public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(OrderActivity.this);
+                LayoutInflater inflater = getLayoutInflater();
+                final View dialogView = inflater.inflate(R.layout.dialog_table, null);
+                builder.setView(dialogView);
+
+                builder.setPositiveButton(R.string.order, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EditText tableEditText = (EditText) dialogView.findViewById(R.id.table_edit_text);
+                        String table = tableEditText.getText().toString();
+                        calendar = Calendar.getInstance();
+                        String date = calendar.getTime().toString();
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        TextView productTextView = (TextView) view.findViewById(R.id.item_name);
+                        String product = productTextView.getText().toString();
+                        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
+                                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                        String name = sharedPref.getString("name", null);
+                        String orderId = null;
+                        if (user != null) {
+                            orderId = user.getUid() + position;
+                        }
+                        postToDatabase(name, date, orderId, product, table);
+                    }
+                });
+
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
             }
         });
 
+    }
+
+    public void postToDatabase(String name, String date, String orderId, String product, String table) {
+        Order order = new Order();
+        order.setUser(name);
+        order.setId(orderId);
+        order.setDate(date);
+        order.setProduct(product);
+        order.setTable(table);
+        order.save();
+        Toast.makeText(getApplicationContext(), "Você pediu um " + product + " para a mesa " + table,
+                Toast.LENGTH_SHORT).show();
     }
 }
