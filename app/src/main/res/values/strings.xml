@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Café</string>
+    <string name="auth_failed">Falha de autenticação</string>
+    <string name="cappuccino">Cappuccino</string>
+    <string name="cappuccino_content_description">Foto de um cappuccino</string>
+    <string name="preference_file_key">preferences</string>
+    <string name="order">Pedir</string>
+    <string name="sign">Assinar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="question_pack">Deseja assinar esse pacote?</string>
+</resources>
